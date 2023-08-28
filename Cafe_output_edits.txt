@@ -1,0 +1,45 @@
+To view only gene families with significant changes mapped onto the branch on which the change occurred, simple parsing can be employed using grep e.g.:
+
+echo $'#nexus\nbegin trees;'>Significant_trees.tre
+grep "*" Base_asr.tre >>Significant_trees.tre
+echo "end;">>Significant_trees.tre 
+
+If you used a the default p-value (0.05) in your analysis but have too many significant results, you can filter these to a lower p-value (0.01 in the example) using awk, e.g.:
+
+awk '$2 < .01 {print $0}' Base_family_results.txt > Sig_at_p.01.txt
+wc -l Sig_at_p.01.txt  #Count the number of significant families in this file using bash:
+
+for getting expansions for the taxon or node that appears in the nth column of the model_change.tab file:
+awk '$6 > 0 {print $1,$6}' Base_change.tab > Expansions_taxonname.txt
+awk '$10 > 0 {print $1,$10}' Base_change.tab > Expansions_Human.txt
+awk '$26 > 0 {print $1,$26}' Base_change.tab > Expansions_Platypus.txt
+awk '$29 > 0 {print $1,$29}' Base_change.tab > Expansions_TasmanianDevil.txt
+awk '$13 > 0 {print $1,$13}' Base_change.tab > Expansions_Lemur.txt
+awk '$44 > 0 {print $1,$44}' Base_change.tab > Expansions_ZebraFinch.txt
+awk '$53 > 0 {print $1,$53}' Base_change.tab > Expansions_SandLizard.txt
+awk '$55 > 0 {print $1,$55}' Base_change.tab > Expansions_Caecilian.txt
+
+
+For contractions:
+awk '$6 < 0 {print $1,$6}' Base_change.tab > Contractions_taxonname.txt
+awk '$10 < 0 {print $1,$10}' Base_change.tab > Contractions_Human.txt
+awk '$26 < 0 {print $1,$26}' Base_change.tab > Contractions_Platypus.txt
+awk '$29 < 0 {print $1,$29}' Base_change.tab > Contractions_TasmanianDevil.txt
+awk '$44 < 0 {print $1,$44}' Base_change.tab > Contractions_ZebraFinch.txt
+awk '$53 < 0 {print $1,$53}' Base_change.tab > Contractions_SandLizard.txt
+awk '$55 < 0 {print $1,$55}' Base_change.tab > Contractions_Caecilian.txt
+
+
+To get a list of which of these are significant parse the tree file or branch probabilities file.
+
+For instance Human is in column 8, parsing the tree file to get the significant families expanded at that node looks like:
+
+grep "Human<8>\*" Base_asr.tre |awk '{print $2}' >Sig_changes_Human.txt
+grep "Platypus<24>\*" Base_asr.tre |awk '{print $2}' >Sig_changes_Platypus.txt
+grep "Tasmanian_devil<27>\*" Base_asr.tre |awk '{print $2}' >Sig_changes_T_Devil.txt
+grep "Zebra_finch<42>\*" Base_asr.tre |awk '{print $2}' >Sig_changes_Zebra_finch.txt
+grep "Caecilian<53>\*" Base_asr.tre |awk '{print $2}' >Sig_changes_Caecilian.txt
+grep "Sand_lizard<51>\*" Base_asr.tre |awk '{print $2}' >Sig_changes_Sand_lizard.txt
+
+#Reference : ## biostars and https://github.com/harish0201/Analyses_Pipelines/blob/main/7.CAFE.sh
+
