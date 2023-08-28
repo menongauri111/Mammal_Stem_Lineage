@@ -1,0 +1,11 @@
+#add null as first column 
+awk -F'\t' '{print "(null)\t"$0}' Orthogroups.GeneCount.tsv > null.tsv
+
+#rename the null header wit Desc and save the file
+
+##remove the total column from above, without needed to figure out column numbers.
+awk -F'\t' '{$NF=""; print $0}' null.tsv | rev | sed 's/^\s*//g' | rev | tr ' ' '\t' > inp.tsv
+
+#run size filter finally
+#filter the Orthogroups.GeneCount.tsv file to remove OG that have more than 100 proteins in a particular species:
+python3  /gpfs01/home/mbxgc4/bin/CAFE5/tutorial/clade_and_size_filter.py -i input.tsv -s -o Cafe_input.tsv
