@@ -15,5 +15,6 @@ The input for Cafe is the gene count file obtained as the result of orthofinder 
 Edit the file accordingly to use as Cafe input. # Edits are provided in Cafe_inp_edits
 Also, Obtain an ultrametric tree by providing divergence time to the tree.
 Divergence time can be obtained from the timetree as well as the literature review (provide recent data regarding the evolution). 
-After Getting the output, the eggnog mapper can be used to study the gene enrichment and Goatools for the GO analysis.
+After Getting the output, it can be analysed to study the expansions and contractions at each node.
+Eggnog mapper can be used to study the gene enrichment and Goatools for the GO analysis.
 Figtree can be used to visualise the trees.
